@@ -6,7 +6,6 @@ import (
 )
 
 func main() {
-	server.LaunchServer()
-
 	database.InitDB()
+	server.LaunchServer()
 }
