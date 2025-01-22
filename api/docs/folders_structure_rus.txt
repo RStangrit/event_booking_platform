@@ -1,0 +1,57 @@
+booking-platform/
+├── cmd/                       # Основной входной файл приложения
+│   └── server/
+│       └── main.go            # Точка входа в приложение
+├── config/                    # Конфигурационные файлы
+│   └── config.yaml            # Основные настройки приложения
+├── internal/                  # Внутренние пакеты (бизнес-логика)
+│   ├── user/                  # Логика и обработка пользователей
+│   │   ├── handler.go         # HTTP-хендлеры
+│   │   ├── service.go         # Бизнес-логика
+│   │   ├── repository.go      # Доступ к базе данных
+│   │   └── model.go           # Структуры и модели данных
+│   ├── event/                 # Логика для мероприятий
+│   │   ├── handler.go
+│   │   ├── service.go
+│   │   ├── repository.go
+│   │   └── model.go
+│   ├── booking/               # Логика для бронирований
+│   │   ├── handler.go
+│   │   ├── service.go
+│   │   ├── repository.go
+│   │   └── model.go
+│   ├── payment/               # Логика для платежей
+│   │   ├── handler.go
+│   │   ├── service.go
+│   │   ├── repository.go
+│   │   └── model.go
+│   └── notification/          # Логика для уведомлений
+│       ├── handler.go
+│       ├── service.go
+│       ├── repository.go
+│       └── model.go
+├── pkg/                       # Вспомогательные пакеты, которые могут быть переиспользованы
+│   ├── database/              # Логика подключения к базе данных
+│   │   └── db.go
+│   ├── logger/                # Логика логирования
+│   │   └── logger.go
+│   ├── middleware/            # HTTP middleware (например, авторизация)
+│   │   ├── auth.go
+│   │   └── cors.go
+│   └── util/                  # Утилитарные функции
+│       ├── validator.go       # Валидация данных
+│       └── helpers.go         # Вспомогательные функции
+├── api/                       # API-схемы (например, OpenAPI/Swagger)
+│   ├── swagger.yaml
+│   └── docs/
+├── migrations/                # SQL-миграции для базы данных
+│   ├── 001_create_users.sql
+│   ├── 002_create_events.sql
+│   └── ...
+├── test/                      # Тесты
+│   ├── integration/           # Интеграционные тесты
+│   ├── unit/                  # Unit-тесты
+│   └── e2e/                   # End-to-end тесты
+├── .env                       # Переменные окружения
+├── go.mod                     # Go-модуль и зависимости
+└── go.sum                     # Контрольная сумма зависимостей

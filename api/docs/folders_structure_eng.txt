@@ -1,0 +1,57 @@
+booking-platform/
+├── cmd/                       # Main application entry point
+│   └── server/
+│       └── main.go            # Application entry file
+├── config/                    # Configuration files
+│   └── config.yaml            # Main application settings
+├── internal/                  # Internal packages (business logic)
+│   ├── user/                  # User logic and processing
+│   │   ├── handler.go         # HTTP handlers
+│   │   ├── service.go         # Business logic
+│   │   ├── repository.go      # Database access
+│   │   └── model.go           # Data structures and models
+│   ├── event/                 # Event logic
+│   │   ├── handler.go
+│   │   ├── service.go
+│   │   ├── repository.go
+│   │   └── model.go
+│   ├── booking/               # Booking logic
+│   │   ├── handler.go
+│   │   ├── service.go
+│   │   ├── repository.go
+│   │   └── model.go
+│   ├── payment/               # Payment logic
+│   │   ├── handler.go
+│   │   ├── service.go
+│   │   ├── repository.go
+│   │   └── model.go
+│   └── notification/          # Notification logic
+│       ├── handler.go
+│       ├── service.go
+│       ├── repository.go
+│       └── model.go
+├── pkg/                       # Auxiliary reusable packages
+│   ├── database/              # Database connection logic
+│   │   └── db.go
+│   ├── logger/                # Logging logic
+│   │   └── logger.go
+│   ├── middleware/            # HTTP middleware (e.g., authentication)
+│   │   ├── auth.go
+│   │   └── cors.go
+│   └── util/                  # Utility functions
+│       ├── validator.go       # Data validation
+│       └── helpers.go         # Helper functions
+├── api/                       # API schemas (e.g., OpenAPI/Swagger)
+│   ├── swagger.yaml
+│   └── docs/
+├── migrations/                # Database SQL migrations
+│   ├── 001_create_users.sql
+│   ├── 002_create_events.sql
+│   └── ...
+├── test/                      # Tests
+│   ├── integration/           # Integration tests
+│   ├── unit/                  # Unit tests
+│   └── e2e/                   # End-to-end tests
+├── .env                       # Environment variables
+├── go.mod                     # Go module and dependencies
+└── go.sum                     # Dependency checksum
