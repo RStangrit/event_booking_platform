@@ -1,6 +1,11 @@
 package database
 
-import "database/sql"
+import (
+	"database/sql"
+	"main/migrations"
+
+	_ "github.com/mattn/go-sqlite3"
+)
 
 var DB *sql.DB
 
@@ -14,5 +19,5 @@ func InitDB() {
 	DB.SetMaxOpenConns(10)
 	DB.SetMaxIdleConns(5)
 
-	// createTables()
+	migrations.CreateTables(DB)
 }
