@@ -14,7 +14,8 @@ type UserRequest struct {
 }
 
 type UserResponse struct {
-	Id    int
-	Name  string
-	Email string
+	Id         int
+	Name       string
+	Email      string
+	Created_at time.Time
 }

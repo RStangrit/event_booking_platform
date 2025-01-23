@@ -3,6 +3,7 @@ package users
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -27,21 +28,36 @@ func createUserHandler(context *gin.Context) {
 	}
 
 	err = user.Save()
-
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "could not save user"})
 		return
 	}
+
 	context.JSON(http.StatusCreated, gin.H{"message": "user created successfully"})
 }
 
 func getUsersHandler(context *gin.Context) {
 	users, err := getAll()
-
 	if err != nil {
 		fmt.Println(err)
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "could not fetch users"})
 		return
 	}
 	context.JSON(http.StatusOK, users)
+}
+
+func getUserHandler(context *gin.Context) {
+	userId, err := strconv.ParseInt(context.Param("id"), 10, 64)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "could not parse user id"})
+		return
+	}
+
+	user, err := getOne(userId)
+	if err != nil {
+		fmt.Println(err)
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "could not fetch user"})
+		return
+	}
+	context.JSON(http.StatusOK, user)
 }
