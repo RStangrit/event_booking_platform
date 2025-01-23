@@ -9,7 +9,7 @@ type EventRequest struct {
 	Date        string `binding:"required"`
 	Location    string `binding:"required"`
 	Capacity    int    `binding:"required"`
-	Price       float64
+	Price       *float64
 	Created_by  int `binding:"required"`
 	Created_at  time.Time
 	Updated_at  *time.Time

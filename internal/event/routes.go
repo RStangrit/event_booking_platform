@@ -5,7 +5,7 @@ import "github.com/gin-gonic/gin"
 //for registering routes
 
 func RegisterRoutes(server *gin.Engine) {
-	server.POST("/events")
+	server.POST("/events", createEventHandler)
 	server.GET("/events")
 	server.GET("/events/:id")
 	server.PUT("/events/:id")
