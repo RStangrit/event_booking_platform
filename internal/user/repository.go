@@ -2,29 +2,27 @@ package users
 
 import (
 	"errors"
-	"fmt"
 	"main/pkg/database"
+	"main/pkg/util"
 	"time"
 )
 
 // to interact with the database.
 func (user *UserRequest) Save() error {
-	fmt.Println(user)
 	unique, _ := IsEmailUnique(user.Email)
 	if !unique {
-		return errors.New("email already exists")
+		return errors.New("user email already exists")
 	}
 
 	query := "INSERT INTO users (name, email, password, role, created_at) VALUES (?, ?, ?, ?, ?)"
 	statement, err := database.DB.Prepare(query)
-
 	if err != nil {
 		return err
 	}
 
 	defer statement.Close()
 
-	currentTime := time.Now().Format("2006-01-02 15:04:05")
+	currentTime := util.GetCurrentTime()
 
 	result, err := statement.Exec(user.Name, user.Email, user.Password, user.Role, currentTime)
 

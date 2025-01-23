@@ -1,7 +1,6 @@
 package users
 
 import (
-	"fmt"
 	"main/pkg/util"
 	"net/http"
 
@@ -19,7 +18,6 @@ func createUserHandler(context *gin.Context) {
 
 	err = user.Save()
 	if err != nil {
-		fmt.Println(err)
 		util.ProvideResponse(context, 500, "could not save user")
 		return
 	}
