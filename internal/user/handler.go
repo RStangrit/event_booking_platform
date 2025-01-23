@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"main/pkg/util"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -38,7 +37,7 @@ func getUsersHandler(context *gin.Context) {
 }
 
 func getUserHandler(context *gin.Context) {
-	userId, err := strconv.ParseInt(context.Param("id"), 10, 64)
+	userId, err := util.GetIntParam(context, "id")
 	if err != nil {
 		util.ProvideResponse(context, 400, "could not parse user id")
 		return
@@ -53,7 +52,7 @@ func getUserHandler(context *gin.Context) {
 }
 
 func updateUserHandler(context *gin.Context) {
-	userId, err := strconv.ParseInt(context.Param("id"), 10, 64)
+	userId, err := util.GetIntParam(context, "id")
 	if err != nil {
 		util.ProvideResponse(context, 400, "could not parse user id")
 		return
@@ -82,7 +81,7 @@ func updateUserHandler(context *gin.Context) {
 }
 
 func deleteUserHandler(context *gin.Context) {
-	userId, err := strconv.ParseInt(context.Param("id"), 10, 64)
+	userId, err := util.GetIntParam(context, "id")
 	if err != nil {
 		util.ProvideResponse(context, 400, "could not parse user id")
 		return
