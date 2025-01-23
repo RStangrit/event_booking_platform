@@ -2,8 +2,8 @@ POST http://localhost:8080/users
 Content-Type: application/json
 
 {
-    "name": "John Smith",
-    "email": "johnsmith@mail.com",
+    "name": "Christopher Robert",
+    "email": "chrisrobert@mail.com",
     "password": "password",
-    "role": "user"
+    "role": "admin"
 }

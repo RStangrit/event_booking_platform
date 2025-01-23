@@ -17,5 +17,6 @@ type UserResponse struct {
 	Id         int
 	Name       string
 	Email      string
+	Role       string
 	Created_at time.Time
 }

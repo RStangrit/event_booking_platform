@@ -1,7 +1,6 @@
 package users
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -39,7 +38,6 @@ func createUserHandler(context *gin.Context) {
 func getUsersHandler(context *gin.Context) {
 	users, err := getAll()
 	if err != nil {
-		fmt.Println(err)
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "could not fetch users"})
 		return
 	}
@@ -55,7 +53,6 @@ func getUserHandler(context *gin.Context) {
 
 	user, err := getOne(userId)
 	if err != nil {
-		fmt.Println(err)
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "could not fetch user"})
 		return
 	}
@@ -71,7 +68,6 @@ func updateUserHandler(context *gin.Context) {
 
 	user, err := getOne(userId)
 	if err != nil {
-		fmt.Println(err)
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "could not fetch user"})
 		return
 	}
@@ -90,4 +86,31 @@ func updateUserHandler(context *gin.Context) {
 		return
 	}
 	context.JSON(http.StatusOK, gin.H{"message": "user updated successfully"})
+}
+
+func deleteUserHandler(context *gin.Context) {
+	userId, err := strconv.ParseInt(context.Param("id"), 10, 64)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "could not parse user id"})
+		return
+	}
+
+	user, err := getOne(userId)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "could not fetch user"})
+		return
+	}
+
+	if user.Role == "admin" {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "not authorized to delete user"})
+		return
+	}
+
+	err = user.Delete()
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "could not delete user"})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"message": "user deleted successfully"})
 }
