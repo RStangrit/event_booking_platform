@@ -61,6 +61,25 @@ func getOne(userId int64) (*UserResponse, error) {
 	return &user, nil
 }
 
+func (user UserResponse) Update() error {
+	query := `
+	UPDATE users
+	SET name = ?, email = ?, updated_at = ?
+	WHERE id = ?
+	`
+	statement, err := database.DB.Prepare(query)
+	if err != nil {
+		return err
+	}
+
+	defer statement.Close()
+
+	currentTime := time.Now().Format("2006-01-02 15:04:05")
+
+	_, err = statement.Exec(user.Name, user.Email, currentTime, user.Id)
+	return err
+}
+
 func checkEmailPresence(email string) (count int, err error) {
 	query := "SELECT COUNT(*) FROM users WHERE email = ?"
 	err = database.DB.QueryRow(query, email).Scan(&count)
