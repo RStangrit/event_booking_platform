@@ -21,7 +21,7 @@ var tables = []Table{
                 name TEXT NOT NULL,
                 email TEXT NOT NULL UNIQUE,
                 password TEXT NOT NULL,
-                role TEXT NOT NULL,
+                role TEXT CHECK(role IN ('admin', 'user')) NOT NULL,
                 created_at DATETIME NOT NULL,
                 updated_at DATETIME
             )
