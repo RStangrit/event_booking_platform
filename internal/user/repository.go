@@ -1,12 +1,20 @@
 package users
 
 import (
+	"errors"
+	"fmt"
 	"main/pkg/database"
 	"time"
 )
 
 // to interact with the database.
 func (user *UserRequest) Save() error {
+	fmt.Println(user)
+	unique, err := IsEmailUnique(user.Email)
+	if !unique {
+		return errors.New("email already exists")
+	}
+
 	query := "INSERT INTO users (name, email, password, role, created_at) VALUES (?, ?, ?, ?, ?)"
 	statement, err := database.DB.Prepare(query)
 
