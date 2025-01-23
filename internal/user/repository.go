@@ -10,7 +10,7 @@ import (
 // to interact with the database.
 func (user *UserRequest) Save() error {
 	fmt.Println(user)
-	unique, err := IsEmailUnique(user.Email)
+	unique, _ := IsEmailUnique(user.Email)
 	if !unique {
 		return errors.New("email already exists")
 	}
