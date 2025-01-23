@@ -6,7 +6,7 @@ import "github.com/gin-gonic/gin"
 
 func RegisterRoutes(server *gin.Engine) {
 	server.POST("/users", createUserHandler)
-	server.GET("/users")
+	server.GET("/users", getUsersHandler)
 	server.GET("/users/:id")
 	server.PUT("/users/:id")
 	server.DELETE("/users/:id")

@@ -1,6 +1,7 @@
 package users
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -8,7 +9,7 @@ import (
 
 // to handle HTTP requests related to users.
 func createUserHandler(context *gin.Context) {
-	var user User
+	var user UserRequest
 
 	err := context.ShouldBindJSON(&user)
 	if err != nil {
@@ -32,4 +33,15 @@ func createUserHandler(context *gin.Context) {
 		return
 	}
 	context.JSON(http.StatusCreated, gin.H{"message": "user created successfully"})
+}
+
+func getUsersHandler(context *gin.Context) {
+	users, err := getAll()
+
+	if err != nil {
+		fmt.Println(err)
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "could not fetch users"})
+		return
+	}
+	context.JSON(http.StatusOK, users)
 }
