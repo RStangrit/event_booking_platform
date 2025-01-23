@@ -23,13 +23,33 @@ func (event *EventRequest) Save() error {
 
 	currentTime := util.GetCurrentTime()
 
-	result, err := statement.Exec(event.Title, event.Description, event.Date, event.Location, event.Capacity, event.Price, event.Created_by, currentTime)
+	result, err := statement.Exec(event.Title, event.Description, event.Date, event.Location, event.Capacity, &event.Price, event.Created_by, currentTime)
 	if err != nil {
 		return err
 	}
 	eventId, err := result.LastInsertId()
 	event.ID = int(eventId)
 	return err
+}
+
+func getAll() ([]EventResponse, error) {
+	var events []EventResponse
+	query := "SELECT id, title, description, date, location, capacity, price, created_by, created_at, updated_at FROM events"
+	rows, err := database.DB.Query(query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var event EventResponse
+		err := rows.Scan(&event.ID, &event.Title, &event.Description, &event.Date, &event.Location, &event.Capacity, &event.Price, &event.Created_by, &event.Created_at, &event.Updated_at)
+		if err != nil {
+			return nil, err
+		}
+		events = append(events, event)
+	}
+	return events, nil
 }
 
 func checkTitlePresence(title string) (count int, err error) {

@@ -3,6 +3,7 @@ package event
 import (
 	"fmt"
 	"main/pkg/util"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +14,6 @@ func createEventHandler(context *gin.Context) {
 
 	err := context.ShouldBindJSON(&event)
 	if err != nil {
-		fmt.Println(err)
 		util.ProvideResponse(context, 400, "could not parse request data")
 	}
 
@@ -24,4 +24,13 @@ func createEventHandler(context *gin.Context) {
 	}
 
 	util.ProvideResponse(context, 201, "event created successfully")
+}
+
+func getEventsHandler(context *gin.Context) {
+	events, err := getAll()
+	if err != nil {
+		fmt.Println(err)
+		util.ProvideResponse(context, 500, "could not fetch events")
+	}
+	context.JSON(http.StatusOK, events)
 }

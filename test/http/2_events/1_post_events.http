@@ -2,10 +2,11 @@ POST http://localhost:8080/events
 Content-Type: application/json
 
 {
-    "Title": "Anniversary",
-    "Description": "of my granny",
+    "Title": "Birthday",
+    "Description": "of my sister",
     "Date": "23/01/2024",
     "Location": "Astana",
-    "Capacity": 12,
+    "Capacity": 3,
+    "Price": 1000.00,
     "Created_by": 1
 }
