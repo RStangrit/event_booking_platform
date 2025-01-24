@@ -1,7 +1,6 @@
 package event
 
 import (
-	"fmt"
 	"main/pkg/util"
 	"net/http"
 
@@ -72,7 +71,6 @@ func updateEventHandler(context *gin.Context) {
 	updatedEvent.ID = event.ID
 	err = updatedEvent.Update()
 	if err != nil {
-		fmt.Println(err)
 		util.ProvideResponse(context, 500, "could not update event")
 		return
 	}
