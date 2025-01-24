@@ -4,7 +4,6 @@ import (
 	"errors"
 	"main/pkg/database"
 	"main/pkg/util"
-	"time"
 )
 
 // to interact with the database.
@@ -80,7 +79,7 @@ func (user UserResponse) Update() error {
 
 	defer statement.Close()
 
-	currentTime := time.Now().Format("2006-01-02 15:04:05")
+	currentTime := util.GetCurrentTime()
 
 	_, err = statement.Exec(user.Name, user.Email, currentTime, user.Id)
 	return err

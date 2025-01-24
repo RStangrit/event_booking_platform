@@ -2,7 +2,6 @@ package event
 
 import (
 	"errors"
-	"fmt"
 	"main/pkg/database"
 	"main/pkg/util"
 )
@@ -60,11 +59,29 @@ func getOneEvent(eventId int64) (*EventResponse, error) {
 	var event EventResponse
 	err := row.Scan(&event.ID, &event.Title, &event.Description, &event.Date, &event.Location, &event.Capacity, &event.Price, &event.Created_by, &event.Created_at)
 	if err != nil {
-		fmt.Println(err)
 		return nil, err
 	}
 
 	return &event, nil
+}
+
+func (event EventResponse) Update() error {
+	query := `
+	UPDATE events
+	SET title = ?, description = ?, date = ?, location = ?, capacity = ?, price = ?, created_by = ?, updated_at = ?
+	WHERE id = ?
+	`
+	statement, err := database.DB.Prepare(query)
+	if err != nil {
+		return err
+	}
+
+	defer statement.Close()
+
+	currentTime := util.GetCurrentTime()
+
+	_, err = statement.Exec(event.Title, event.Description, event.Date, event.Location, event.Capacity, event.Price, event.Created_by, currentTime, event.ID)
+	return err
 }
 
 func checkTitlePresence(title string) (count int, err error) {
