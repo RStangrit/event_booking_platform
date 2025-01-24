@@ -45,7 +45,7 @@ func getAllUsers() ([]UserResponse, error) {
 
 	for rows.Next() {
 		var user UserResponse
-		err := rows.Scan(&user.Id, &user.Name, &user.Email, &user.Role, &user.Created_at)
+		err := rows.Scan(&user.Id, &user.Name, &user.Email, &user.Role, &user.CreatedAt)
 		if err != nil {
 			return nil, err
 		}
@@ -59,7 +59,7 @@ func getOneUser(userId int64) (*UserResponse, error) {
 	row := database.DB.QueryRow(query, userId)
 
 	var user UserResponse
-	err := row.Scan(&user.Id, &user.Name, &user.Email, &user.Role, &user.Created_at)
+	err := row.Scan(&user.Id, &user.Name, &user.Email, &user.Role, &user.CreatedAt)
 	if err != nil {
 		return nil, err
 	}

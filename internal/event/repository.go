@@ -23,7 +23,7 @@ func (event *EventRequest) Save() error {
 
 	currentTime := util.GetCurrentTime()
 
-	result, err := statement.Exec(event.Title, event.Description, event.Date, event.Location, event.Capacity, &event.Price, event.Created_by, currentTime)
+	result, err := statement.Exec(event.Title, event.Description, event.Date, event.Location, event.Capacity, &event.Price, event.CreatedBy, currentTime)
 	if err != nil {
 		return err
 	}
@@ -43,7 +43,7 @@ func getAllEvents() ([]EventResponse, error) {
 
 	for rows.Next() {
 		var event EventResponse
-		err := rows.Scan(&event.ID, &event.Title, &event.Description, &event.Date, &event.Location, &event.Capacity, &event.Price, &event.Created_by, &event.Created_at, &event.Updated_at)
+		err := rows.Scan(&event.ID, &event.Title, &event.Description, &event.Date, &event.Location, &event.Capacity, &event.Price, &event.CreatedBy, &event.CreatedAt, &event.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
@@ -57,7 +57,7 @@ func getOneEvent(eventId int64) (*EventResponse, error) {
 	row := database.DB.QueryRow(query, eventId)
 
 	var event EventResponse
-	err := row.Scan(&event.ID, &event.Title, &event.Description, &event.Date, &event.Location, &event.Capacity, &event.Price, &event.Created_by, &event.Created_at)
+	err := row.Scan(&event.ID, &event.Title, &event.Description, &event.Date, &event.Location, &event.Capacity, &event.Price, &event.CreatedBy, &event.CreatedAt)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func (event EventResponse) Update() error {
 
 	currentTime := util.GetCurrentTime()
 
-	_, err = statement.Exec(event.Title, event.Description, event.Date, event.Location, event.Capacity, event.Price, event.Created_by, currentTime, event.ID)
+	_, err = statement.Exec(event.Title, event.Description, event.Date, event.Location, event.Capacity, event.Price, event.CreatedBy, currentTime, event.ID)
 	return err
 }
 
