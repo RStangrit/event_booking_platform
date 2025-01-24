@@ -1,11 +1,13 @@
 package main
 
 import (
-	"main/cmd/server"
-	"main/pkg/database"
+	"main/cmd/server"   //launch server
+	"main/pkg/database" //launch db
+	"main/pkg/util"     //get env variables
 )
 
 func main() {
-	database.InitDB()
+	dbOperator := util.GetEnvVariable("DATABASE_OPERATOR")
+	database.InitDB(dbOperator)
 	server.LaunchServer()
 }
