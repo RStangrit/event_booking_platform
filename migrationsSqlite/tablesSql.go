@@ -1,4 +1,4 @@
-package migrations
+package migrationsSqlite
 
 import (
 	"database/sql"
@@ -153,15 +153,21 @@ var tables = []Table{
 	},
 }
 
-func CreateTables(DB *sql.DB) {
+func CreateTablesSql(DB *sql.DB) error {
 	for i := range tables {
-		createTable(tables[i], DB)
+		err := createTable(tables[i], DB)
+		if err != nil {
+			return err
+		}
 	}
+	return nil
 }
 
-func createTable(table Table, DB *sql.DB) {
+func createTable(table Table, DB *sql.DB) error {
 	_, err := DB.Exec(table.Query)
 	if err != nil {
-		log.Fatalf("could not create table %s: %v", table.Name, err)
+		log.Fatalf("Failed to create table %s: %v", table.Name, err)
 	}
+	log.Println("Migration completed successfully")
+	return nil
 }
