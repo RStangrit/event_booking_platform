@@ -84,6 +84,16 @@ func (event EventResponse) Update() error {
 	return err
 }
 
+func (event EventResponse) Delete() error {
+	query := "DELETE FROM events WHERE id = ? "
+	statement, err := database.DB.Prepare(query)
+	if err != nil {
+		return err
+	}
+	_, err = statement.Exec(event.ID)
+	return err
+}
+
 func checkTitlePresence(title string) (count int, err error) {
 	query := "SELECT COUNT(*) FROM events WHERE title = ?"
 	err = database.DB.QueryRow(query, title).Scan(&count)

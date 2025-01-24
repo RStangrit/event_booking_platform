@@ -78,3 +78,23 @@ func updateEventHandler(context *gin.Context) {
 	}
 	util.ProvideResponse(context, 200, "event updated successfully")
 }
+
+func deleteEventHandler(context *gin.Context) {
+	eventId, err := util.GetIntParam(context, "id")
+	if err != nil {
+		util.ProvideResponse(context, 400, "could not parse event id")
+		return
+	}
+
+	event, err := getOneEvent(eventId)
+	if err != nil {
+		util.ProvideResponse(context, 400, "could not fetch event")
+		return
+	}
+
+	err = event.Delete()
+	if err != nil {
+		util.ProvideResponse(context, 400, "could not delete event")
+	}
+	util.ProvideResponse(context, 200, "event deleted successfully")
+}

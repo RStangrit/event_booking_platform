@@ -98,7 +98,6 @@ func deleteUserHandler(context *gin.Context) {
 
 	err = user.Delete()
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": "could not delete user"})
 		util.ProvideResponse(context, 400, "could not delete user")
 		return
 	}
