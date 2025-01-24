@@ -35,7 +35,7 @@ func (user *UserRequest) Save() error {
 	return err
 }
 
-func getAll() ([]UserResponse, error) {
+func getAllUsers() ([]UserResponse, error) {
 	var users []UserResponse
 	query := "SELECT id, name, email, role, created_at FROM users"
 	rows, err := database.DB.Query(query)
@@ -55,7 +55,7 @@ func getAll() ([]UserResponse, error) {
 	return users, nil
 }
 
-func getOne(userId int64) (*UserResponse, error) {
+func getOneUser(userId int64) (*UserResponse, error) {
 	query := `SELECT id, name, email, role, created_at FROM users WHERE id =?`
 	row := database.DB.QueryRow(query, userId)
 

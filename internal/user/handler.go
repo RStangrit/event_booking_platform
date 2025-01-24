@@ -26,7 +26,7 @@ func createUserHandler(context *gin.Context) {
 }
 
 func getUsersHandler(context *gin.Context) {
-	users, err := getAll()
+	users, err := getAllUsers()
 	if err != nil {
 		util.ProvideResponse(context, 500, "could not fetch users")
 		return
@@ -41,7 +41,7 @@ func getUserHandler(context *gin.Context) {
 		return
 	}
 
-	user, err := getOne(userId)
+	user, err := getOneUser(userId)
 	if err != nil {
 		util.ProvideResponse(context, 400, "could not fetch user")
 		return
@@ -56,7 +56,7 @@ func updateUserHandler(context *gin.Context) {
 		return
 	}
 
-	user, err := getOne(userId)
+	user, err := getOneUser(userId)
 	if err != nil {
 		util.ProvideResponse(context, 500, "could not fetch user")
 		return
@@ -85,7 +85,7 @@ func deleteUserHandler(context *gin.Context) {
 		return
 	}
 
-	user, err := getOne(userId)
+	user, err := getOneUser(userId)
 	if err != nil {
 		util.ProvideResponse(context, 500, "could not fetch user")
 		return

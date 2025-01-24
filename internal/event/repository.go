@@ -2,6 +2,7 @@ package event
 
 import (
 	"errors"
+	"fmt"
 	"main/pkg/database"
 	"main/pkg/util"
 )
@@ -32,7 +33,7 @@ func (event *EventRequest) Save() error {
 	return err
 }
 
-func getAll() ([]EventResponse, error) {
+func getAllEvents() ([]EventResponse, error) {
 	var events []EventResponse
 	query := "SELECT id, title, description, date, location, capacity, price, created_by, created_at, updated_at FROM events"
 	rows, err := database.DB.Query(query)
@@ -50,6 +51,20 @@ func getAll() ([]EventResponse, error) {
 		events = append(events, event)
 	}
 	return events, nil
+}
+
+func getOneEvent(eventId int64) (*EventResponse, error) {
+	query := "SELECT id, title, description, date, location, capacity, price, created_by, created_at FROM events WHERE id = ?"
+	row := database.DB.QueryRow(query, eventId)
+
+	var event EventResponse
+	err := row.Scan(&event.ID, &event.Title, &event.Description, &event.Date, &event.Location, &event.Capacity, &event.Price, &event.Created_by, &event.Created_at)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	return &event, nil
 }
 
 func checkTitlePresence(title string) (count int, err error) {
