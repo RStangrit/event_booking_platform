@@ -34,3 +34,12 @@ type User struct {
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
+
+func (user *UserRequest) ToUser() *User {
+	return &User{
+		Name:     user.Name,
+		Email:    user.Email,
+		Password: user.Password,
+		Role:     user.Role,
+	}
+}

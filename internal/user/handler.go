@@ -11,13 +11,11 @@ import (
 func createUserHandler(context *gin.Context) {
 	var user UserRequest
 
-	err := context.ShouldBindJSON(&user)
-	if err != nil {
+	if context.ShouldBindJSON(&user) != nil {
 		util.ProvideResponse(context, 400, "Invalid JSON format")
 	}
 
-	err = user.Save()
-	if err != nil {
+	if user.Save() != nil {
 		util.ProvideResponse(context, 500, "Failed to save user")
 		return
 	}

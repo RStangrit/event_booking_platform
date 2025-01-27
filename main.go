@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	dbOperator := util.GetEnvVariable("DATABASE_OPERATOR")
-	database.InitDB(dbOperator)
+	dbType := util.GetEnvVariable("DATABASE_TYPE")
+	database.InitDB(dbType)
 	server.LaunchServer()
 }

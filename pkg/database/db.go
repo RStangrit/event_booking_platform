@@ -14,13 +14,13 @@ import (
 )
 
 var (
-	DB    *sql.DB
-	ORMDB *gorm.DB
+	DB   *sql.DB
+	GORM *gorm.DB
 )
 
-// InitDB initializes the database based on the given dbOperator
-func InitDB(dbOperator string) {
-	switch dbOperator {
+// InitDB initializes the database based on the given dbType
+func InitDB(dbType string) {
+	switch dbType {
 	case "sqlite":
 		if err := initSQLiteDB(); err != nil {
 			log.Fatalf("Failed to initialize SQLite: %v", err)
@@ -64,13 +64,13 @@ func initPostgresDB() error {
 		return fmt.Errorf("DSN environment variable is not set")
 	}
 
-	ORMDB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	GORM, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		return fmt.Errorf("could not connect to the PostgreSQL database: %w", err)
 	}
 
 	// Run migrations
-	if err := migrationsPostgres.CreateTablesPostgres(ORMDB); err != nil {
+	if err := migrationsPostgres.CreateTablesPostgres(GORM); err != nil {
 		return fmt.Errorf("failed to run PostgreSQL migrations: %w", err)
 	}
 

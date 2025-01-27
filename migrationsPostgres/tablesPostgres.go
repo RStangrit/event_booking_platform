@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type UserModel struct {
+type User struct {
 	Id         int
 	Name       string `binding:"required"`
 	Email      string `binding:"required"`
@@ -17,7 +17,7 @@ type UserModel struct {
 	Updated_at *time.Time
 }
 
-type EventModel struct {
+type Event struct {
 	ID          int
 	Title       string `binding:"required"`
 	Description string `binding:"required"`
@@ -30,18 +30,13 @@ type EventModel struct {
 	Updated_at  *time.Time
 }
 
-var tables = []interface{}{
-	&UserModel{},
-	&EventModel{},
-}
-
-func CreateTablesPostgres(ORMDB *gorm.DB) error {
-	err := createTable(tables, ORMDB)
+func CreateTablesPostgres(GORM *gorm.DB) error {
+	err := createTable(GORM)
 	return err
 }
 
-func createTable(tables []interface{}, ORMDB *gorm.DB) error {
-	err := ORMDB.AutoMigrate(&UserModel{}, &EventModel{})
+func createTable(GORM *gorm.DB) error {
+	err := GORM.AutoMigrate(&User{}, &Event{})
 	if err != nil {
 		log.Fatalf("Failed to migrate tables: %v", err)
 		return err
